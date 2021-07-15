@@ -23,7 +23,6 @@ public class SwaggerConfig {
         title = "User Service API " + version;
 
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("awsd")
                 .apiInfo(apiInfo(title, version))
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.gabia"))
