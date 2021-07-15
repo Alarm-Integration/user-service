@@ -23,6 +23,10 @@ ext {
     set('springCloudVersion', "2020.0.3")
 }
 
+jar {
+    enabled = false
+}
+
 dependencies {
     // config
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
