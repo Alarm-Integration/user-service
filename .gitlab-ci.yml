@@ -63,7 +63,7 @@ g238_deploy:
   script:
     - docker pull $DOCKER_HUB_ID/$IMAGE_NAME
     - "{ docker stop $CONTAINER_NAME; docker rm $CONTAINER_NAME; } || true"
-    - "docker run -d -p $SLACK_SERVICE_PORT:$SLACK_SERVICE_PORT \
+    - "docker run -d -p $USER_SERVICE_PORT:$USER_SERVICE_PORT \
     --name $CONTAINER_NAME \
     -e HOST_IP=$HOST_238_IP \
     -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
@@ -76,7 +76,7 @@ g239_deploy:
   script:
     - docker pull $DOCKER_HUB_ID/$IMAGE_NAME
     - "{ docker stop $CONTAINER_NAME; docker rm $CONTAINER_NAME; } || true"
-    - "docker run -d -p $SLACK_SERVICE_PORT:$SLACK_SERVICE_PORT \
+    - "docker run -d -p $USER_SERVICE_PORT:$USER_SERVICE_PORT \
     --name $CONTAINER_NAME \
     -e HOST_IP=$HOST_239_IP \
     -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
@@ -89,7 +89,7 @@ g240_deploy:
   script:
     - docker pull $DOCKER_HUB_ID/$IMAGE_NAME
     - "{ docker stop $CONTAINER_NAME; docker rm $CONTAINER_NAME; } || true"
-    - "docker run -d -p $SLACK_SERVICE_PORT:$SLACK_SERVICE_PORT \
+    - "docker run -d -p $USER_SERVICE_PORT:$USER_SERVICE_PORT \
     --name $CONTAINER_NAME \
     -e HOST_IP=$HOST_240_IP \
     -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
