@@ -1,4 +1,9 @@
+server:
+  port: 30040
+
 spring:
+  application:
+    name: slack-service
   messages:
     basename: errors
   datasource:
@@ -20,3 +25,20 @@ logging:
 jwt:
   secret: SecretKey
   expiration: 86400000
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: "${HOST_IP}"
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://10.7.27.18:8761/eureka,http://10.7.27.19:8761/eureka
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, busrefresh
