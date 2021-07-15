@@ -25,6 +25,7 @@ import javax.validation.Valid;
 
 @Api(value = "UserController")
 @RequiredArgsConstructor
+@RequestMapping("/v1")
 @RestController
 public class UserController {
     private final UserService userService;
