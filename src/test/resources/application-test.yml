@@ -10,9 +10,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  cloud:
-    config:
-      enabled: false
 
 logging:
   level:
