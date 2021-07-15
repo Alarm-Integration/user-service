@@ -39,11 +39,19 @@ public class ControllerExceptionHandler {
                 .body(APIResponse.withMessageAndResult("BindException", ValidationResult.create(ex, messageSource, locale)));
     }
 
-    @ExceptionHandler({BadCredentialsException.class, AccessDeniedException.class})
+    @ExceptionHandler({BadCredentialsException.class})
     public ResponseEntity<APIResponse> badCredentialExceptionHandler(Exception ex, WebRequest request) {
         log.error(ex.getMessage());
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
+                .body(APIResponse.withMessageAndResult(ex.getMessage(), null));
+    }
+
+    @ExceptionHandler({AccessDeniedException.class})
+    public ResponseEntity<APIResponse> accessDeniedExceptionHandler(Exception ex, WebRequest request) {
+        log.error(ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
                 .body(APIResponse.withMessageAndResult(ex.getMessage(), null));
     }
 }

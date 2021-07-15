@@ -3,6 +3,7 @@ package com.gabia.avengers.userservice.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gabia.avengers.userservice.domain.User;
 import com.gabia.avengers.userservice.dto.request.LoginRequest;
+import com.gabia.avengers.userservice.dto.request.ModifyRequest;
 import com.gabia.avengers.userservice.dto.request.SignupRequest;
 import com.gabia.avengers.userservice.repository.UserRepository;
 import com.gabia.avengers.userservice.service.CustomUserDetailsService;
@@ -21,8 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles("test")
@@ -242,8 +242,139 @@ class UserControllerTest {
 
         //then
         result
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value("접근 권한이 없습니다"))
+                .andExpect(jsonPath("$.result").isEmpty());
+    }
+
+    @Test
+    void findUser_실패_토큰_없음() throws Exception {
+        //given
+
+        //when
+        ResultActions result = this.mockMvc.perform(get("/" + userId)
+                .accept(APPLICATION_JSON));
+
+        //then
+        result
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value("AccessDenied"))
+                .andExpect(jsonPath("$.message").value("인증이 필요합니다"))
+                .andExpect(jsonPath("$.result").isEmpty());
+    }
+
+    @Test
+    void modifyUser_성공() throws Exception {
+        //given
+        ModifyRequest modifyRequest = ModifyRequest.builder()
+                .password("newPassword")
+                .build();
+
+        String token = getToken(username, password);
+
+        //when
+        ResultActions result = mockMvc.perform(patch("/" + userId)
+                .header("Authorization", String.format("Bearer %s", token))
+                .contentType(APPLICATION_JSON)
+                .content(asJsonString(modifyRequest))
+                .accept(APPLICATION_JSON));
+
+        //then
+        result
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("회원 정보 수정 성공"))
+                .andExpect(jsonPath("$.result.id").value(userId))
+                .andExpect(jsonPath("$.result.username").value(username));
+    }
+
+    @Test
+    void modifyUser_실패_다른_사용자_수정() throws Exception {
+        //given
+        ModifyRequest modifyRequest = ModifyRequest.builder()
+                .password("newPassword")
+                .build();
+
+        String token = getToken(username, password);
+
+        //when
+        ResultActions result = mockMvc.perform(patch("/" + userId + 1)
+                .header("Authorization", String.format("Bearer %s", token))
+                .contentType(APPLICATION_JSON)
+                .content(asJsonString(modifyRequest))
+                .accept(APPLICATION_JSON));
+
+        //then
+        result
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value("접근 권한이 없습니다"))
+                .andExpect(jsonPath("$.result").isEmpty());
+    }
+
+    @Test
+    void modifyUser_실패_토큰_없음() throws Exception {
+        //given
+        ModifyRequest modifyRequest = ModifyRequest.builder()
+                .password("newPassword")
+                .build();
+
+        //when
+        ResultActions result = mockMvc.perform(patch("/" + userId + 1)
+                .contentType(APPLICATION_JSON)
+                .content(asJsonString(modifyRequest))
+                .accept(APPLICATION_JSON));
+
+        //then
+        result
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.message").value("인증이 필요합니다"))
+                .andExpect(jsonPath("$.result").isEmpty());
+    }
+
+    @Test
+    void deleteUser_성공() throws Exception {
+        //given
+        String token = getToken(username, password);
+
+        //when
+        ResultActions result = mockMvc.perform(delete("/" + userId)
+                .header("Authorization", String.format("Bearer %s", token))
+                .accept(APPLICATION_JSON));
+
+        //then
+        result
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("회원 삭제 성공"))
+                .andExpect(jsonPath("$.result").isEmpty());
+    }
+
+    @Test
+    void deleteUser_실패_다른_사용자_삭제() throws Exception {
+        //given
+        String token = getToken(username, password);
+
+        //when
+        ResultActions result = mockMvc.perform(delete("/" + userId + 1)
+                .header("Authorization", String.format("Bearer %s", token))
+                .accept(APPLICATION_JSON));
+
+        //then
+        result
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value("접근 권한이 없습니다"))
+                .andExpect(jsonPath("$.result").isEmpty());
+    }
+
+    @Test
+    void deleteUser_실패_토큰_없음() throws Exception {
+        //given
+
+        //when
+        ResultActions result = mockMvc.perform(delete("/" + userId)
+                .accept(APPLICATION_JSON));
+
+        //then
+        result
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.message").value("인증이 필요합니다"))
                 .andExpect(jsonPath("$.result").isEmpty());
     }
 

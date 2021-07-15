@@ -28,7 +28,8 @@ public class UserController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> createUser(@Valid @RequestBody SignupRequest signUpRequest, BindingResult bindingResult) throws Exception {
+    public ResponseEntity<?> createUser(@Valid @RequestBody SignupRequest signUpRequest,
+                                        BindingResult bindingResult) throws Exception {
         validateDuplicateUser(signUpRequest.getUsername(), bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -48,7 +49,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult) throws BindException {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest,
+                                              BindingResult bindingResult) throws BindException {
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
@@ -63,9 +65,10 @@ public class UserController {
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
-    public ResponseEntity<?> findUser(@CurrentUser UserDetailsImpl currentUser,  @PathVariable Long id) {
+    public ResponseEntity<?> findUser(@CurrentUser UserDetailsImpl currentUser,
+                                      @PathVariable Long id) {
         if (!currentUser.getId().equals(id))
-            throw new AccessDeniedException("AccessDenied");
+            throw new AccessDeniedException("접근 권한이 없습니다");
 
         User user = userService.findUserById(id);
         UserInfoResponse userInfoResponse = new UserInfoResponse(user);
@@ -74,7 +77,13 @@ public class UserController {
 
     @PreAuthorize("hasRole('USER')")
     @PatchMapping("/{id}")
-    public ResponseEntity<?> modifyUser(@PathVariable Long id, @Valid @RequestBody ModifyRequest modifyRequest, BindingResult bindingResult) throws BindException {
+    public ResponseEntity<?> modifyUser(@CurrentUser UserDetailsImpl currentUser,
+                                        @PathVariable Long id,
+                                        @Valid @RequestBody ModifyRequest modifyRequest,
+                                        BindingResult bindingResult) throws BindException {
+        if (!currentUser.getId().equals(id))
+            throw new AccessDeniedException("접근 권한이 없습니다");
+
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
@@ -86,7 +95,11 @@ public class UserController {
 
     @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@CurrentUser UserDetailsImpl currentUser,
+                                        @PathVariable Long id) {
+        if (!currentUser.getId().equals(id))
+            throw new AccessDeniedException("접근 권한이 없습니다");
+
         userService.deleteUser(id);
         return ResponseEntity.ok(APIResponse.withMessageAndResult("회원 삭제 성공", null));
     }
