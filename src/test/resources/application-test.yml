@@ -10,7 +10,18 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  cloud:
+    config:
+      enabled: false
 
 logging:
   level:
     org.hibernate.SQL: debug
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: "localhost"
+  client:
+    register-with-eureka: false
+    fetch-registry: false
