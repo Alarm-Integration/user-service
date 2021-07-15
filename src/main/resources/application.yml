@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: slack-service
+    name: user-service
   messages:
     basename: errors
   datasource:
