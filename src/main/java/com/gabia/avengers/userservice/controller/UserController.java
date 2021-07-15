@@ -25,7 +25,7 @@ import javax.validation.Valid;
 
 @Api(value = "UserController")
 @RequiredArgsConstructor
-@RequestMapping("/v1")
+@RequestMapping("/user-service")
 @RestController
 public class UserController {
     private final UserService userService;
@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "로그인", notes = "로그인 성공 시 jwt 토큰을 헤더로 반환합니다")
-    @PostMapping("/login")
+    @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest,
                                               BindingResult bindingResult) throws BindException {
         if (bindingResult.hasErrors()) {
