@@ -1,0 +1,23 @@
+server:
+  port: 30040
+
+spring:
+  messages:
+    basename: errors
+  application:
+    name: user-service
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+      format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: "${HOST_IP}"

@@ -1,17 +1,24 @@
+server:
+  port: 8080
+
 spring:
   messages:
     basename: errors
+  application:
+    name: user-service
   datasource:
-    url: jdbc:h2:mem:test
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://139.150.75.240:3306/fluentd-test?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
-        format_sql: true
+      format_sql: true
+  cloud:
+    config:
+      enabled: false
 
 logging:
   level:
