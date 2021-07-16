@@ -67,6 +67,7 @@ g238_deploy:
     - "docker run -d -p $SERVICE_PORT:$SERVICE_PORT \
     --name $CONTAINER_NAME \
     -e HOST_IP=$HOST_238_IP \
+    -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
     -e spring.profiles.active=$ENVIRONMENT \
     $DOCKER_HUB_ID/$IMAGE_NAME"
 
@@ -80,6 +81,7 @@ g239_deploy:
     - "docker run -d -p $SERVICE_PORT:$SERVICE_PORT \
     --name $CONTAINER_NAME \
     -e HOST_IP=$HOST_239_IP \
+    -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
     -e spring.profiles.active=$ENVIRONMENT \
     $DOCKER_HUB_ID/$IMAGE_NAME"
 
@@ -93,5 +95,6 @@ g240_deploy:
     - "docker run -d -p $SERVICE_PORT:$SERVICE_PORT \
     --name $CONTAINER_NAME \
     -e HOST_IP=$HOST_240_IP \
+    -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
     -e spring.profiles.active=$ENVIRONMENT \
     $DOCKER_HUB_ID/$IMAGE_NAME"
