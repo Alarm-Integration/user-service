@@ -64,10 +64,9 @@ g238_deploy:
   script:
     - docker pull $DOCKER_HUB_ID/$IMAGE_NAME
     - "{ docker stop $CONTAINER_NAME; docker rm $CONTAINER_NAME; } || true"
-    - "docker run -d -p $USER_SERVICE_PORT:$USER_SERVICE_PORT \
+    - "docker run -d -p $SERVICE_PORT:$SERVICE_PORT \
     --name $CONTAINER_NAME \
     -e HOST_IP=$HOST_238_IP \
-    -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
     -e spring.profiles.active=$ENVIRONMENT \
     $DOCKER_HUB_ID/$IMAGE_NAME"
 
@@ -78,10 +77,9 @@ g239_deploy:
   script:
     - docker pull $DOCKER_HUB_ID/$IMAGE_NAME
     - "{ docker stop $CONTAINER_NAME; docker rm $CONTAINER_NAME; } || true"
-    - "docker run -d -p $USER_SERVICE_PORT:$USER_SERVICE_PORT \
+    - "docker run -d -p $SERVICE_PORT:$SERVICE_PORT \
     --name $CONTAINER_NAME \
     -e HOST_IP=$HOST_239_IP \
-    -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
     -e spring.profiles.active=$ENVIRONMENT \
     $DOCKER_HUB_ID/$IMAGE_NAME"
 
@@ -92,9 +90,8 @@ g240_deploy:
   script:
     - docker pull $DOCKER_HUB_ID/$IMAGE_NAME
     - "{ docker stop $CONTAINER_NAME; docker rm $CONTAINER_NAME; } || true"
-    - "docker run -d -p $USER_SERVICE_PORT:$USER_SERVICE_PORT \
+    - "docker run -d -p $SERVICE_PORT:$SERVICE_PORT \
     --name $CONTAINER_NAME \
     -e HOST_IP=$HOST_240_IP \
-    -e CONFIG_SERVER_URL=$CONFIG_SERVER_URL \
     -e spring.profiles.active=$ENVIRONMENT \
     $DOCKER_HUB_ID/$IMAGE_NAME"
