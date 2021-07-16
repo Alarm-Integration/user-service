@@ -10,6 +10,8 @@ import com.gabia.avengers.userservice.dto.response.UserInfoResponse;
 import com.gabia.avengers.userservice.security.CurrentUser;
 import com.gabia.avengers.userservice.service.AuthService;
 import com.gabia.avengers.userservice.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Api(value = "UserController")
 @RequiredArgsConstructor
+@RequestMapping("/user-service")
 @RestController
 public class UserController {
     private final UserService userService;
     private final AuthService authService;
 
+    @ApiOperation(value = "회원 가입", notes = "회원 가입")
     @PostMapping("/signup")
     public ResponseEntity<?> createUser(@Valid @RequestBody SignupRequest signUpRequest,
                                         BindingResult bindingResult) throws Exception {
@@ -48,7 +53,8 @@ public class UserController {
         }
     }
 
-    @PostMapping("/login")
+    @ApiOperation(value = "로그인", notes = "로그인 성공 시 jwt 토큰을 헤더로 반환합니다")
+    @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest,
                                               BindingResult bindingResult) throws BindException {
         if (bindingResult.hasErrors()) {
@@ -63,6 +69,7 @@ public class UserController {
                 .body(APIResponse.withMessageAndResult("로그인 성공", null));
     }
 
+    @ApiOperation(value = "사용자 조회", notes = "사용자를 조회합니다")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findUser(@CurrentUser UserDetailsImpl currentUser,
@@ -75,6 +82,7 @@ public class UserController {
         return ResponseEntity.ok(APIResponse.withMessageAndResult("회원 조회 성공", userInfoResponse));
     }
 
+    @ApiOperation(value = "사용자 정보 수정", notes = "사용자 정보를 수정합니다")
     @PreAuthorize("hasRole('USER')")
     @PatchMapping("/{id}")
     public ResponseEntity<?> modifyUser(@CurrentUser UserDetailsImpl currentUser,
@@ -93,6 +101,7 @@ public class UserController {
         return ResponseEntity.ok(APIResponse.withMessageAndResult("회원 정보 수정 성공", userInfoResponse));
     }
 
+    @ApiOperation(value = "사용자 삭제", notes = "사용자를 삭제합니다")
     @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@CurrentUser UserDetailsImpl currentUser,
