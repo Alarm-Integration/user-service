@@ -1,5 +1,6 @@
 spring:
   cloud:
     config:
-      uri: "${CONFIG_SERVER_URL}"
+      uri: http://139.150.75.239:8888/
+#      uri: "${CONFIG_SERVER_URL}"
       name: user-service

@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://139.150.75.240:3306/fluentd-test?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+      format_sql: true
+  cloud:
+    config:
+      enabled: false
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: "localhost"
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+jwt:
+  secret: SecretKey
+  expiration: 86400000
