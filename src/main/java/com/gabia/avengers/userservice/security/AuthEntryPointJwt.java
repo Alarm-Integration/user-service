@@ -23,7 +23,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
-        log.error("Unauthorized error: {}", authException.getMessage());
+        log.error("Request URI: {} Unauthorized error: {}",request.getRequestURI(), authException.getMessage());
 
         APIResponse apiResponse = APIResponse.withMessageAndResult("인증이 필요합니다", null);
 
