@@ -93,7 +93,7 @@ jacocoTestCoverageVerification {
                 minimum = 0.7
             }
 
-            excludes = ['com.gabia.avengers.userservice.UserServiceApplication', 'com.gabia.avengers.userservice.util.*', ]
+            excludes = ['com.gabia.avengers.userservice.UserServiceApplication', 'com.gabia.avengers.userservice.util.*']
         }
     }
 }

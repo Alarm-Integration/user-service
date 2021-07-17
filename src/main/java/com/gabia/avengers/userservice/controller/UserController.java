@@ -20,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 
@@ -72,7 +73,7 @@ public class UserController {
     @ApiOperation(value = "사용자 조회", notes = "사용자를 조회합니다")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
-    public ResponseEntity<?> findUser(@CurrentUser UserDetailsImpl currentUser,
+    public ResponseEntity<?> findUser(@ApiIgnore @CurrentUser UserDetailsImpl currentUser,
                                       @PathVariable Long id) {
         if (!currentUser.getId().equals(id))
             throw new AccessDeniedException("접근 권한이 없습니다");
@@ -85,7 +86,7 @@ public class UserController {
     @ApiOperation(value = "사용자 정보 수정", notes = "사용자 정보를 수정합니다")
     @PreAuthorize("hasRole('USER')")
     @PatchMapping("/{id}")
-    public ResponseEntity<?> modifyUser(@CurrentUser UserDetailsImpl currentUser,
+    public ResponseEntity<?> modifyUser(@ApiIgnore @CurrentUser UserDetailsImpl currentUser,
                                         @PathVariable Long id,
                                         @Valid @RequestBody ModifyRequest modifyRequest,
                                         BindingResult bindingResult) throws BindException {
@@ -104,7 +105,7 @@ public class UserController {
     @ApiOperation(value = "사용자 삭제", notes = "사용자를 삭제합니다")
     @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@CurrentUser UserDetailsImpl currentUser,
+    public ResponseEntity<?> deleteUser(@ApiIgnore @CurrentUser UserDetailsImpl currentUser,
                                         @PathVariable Long id) {
         if (!currentUser.getId().equals(id))
             throw new AccessDeniedException("접근 권한이 없습니다");
