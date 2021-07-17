@@ -35,3 +35,9 @@ eureka:
 jwt:
   secret: SecretKey
   expiration: 86400000
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /user-service/v2/api-docs

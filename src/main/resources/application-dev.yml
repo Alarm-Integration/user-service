@@ -21,3 +21,9 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: "${HOST_IP}"
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /user-service/v2/api-docs
