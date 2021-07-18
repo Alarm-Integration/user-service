@@ -2,7 +2,7 @@ package com.gabia.avengers.userservice.service;
 
 import com.gabia.avengers.userservice.domain.User;
 import com.gabia.avengers.userservice.dto.request.ModifyRequest;
-import com.gabia.avengers.userservice.dto.request.SignupRequest;
+import com.gabia.avengers.userservice.dto.request.SignUpRequest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ class UserServiceTest {
     @Test
     void createUser_성공() throws Exception {
         //given
-        SignupRequest signupRequest = SignupRequest.builder()
+        SignUpRequest signupRequest = SignUpRequest.builder()
                 .username(username)
                 .password(password)
                 .build();
@@ -64,7 +64,7 @@ class UserServiceTest {
         em.flush();
         em.clear();
 
-        SignupRequest signupRequest = SignupRequest.builder()
+        SignUpRequest signupRequest = SignUpRequest.builder()
                 .username(username)
                 .password(password)
                 .build();

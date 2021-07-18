@@ -2,9 +2,9 @@ package com.gabia.avengers.userservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gabia.avengers.userservice.domain.User;
-import com.gabia.avengers.userservice.dto.request.LoginRequest;
+import com.gabia.avengers.userservice.dto.request.SignInRequest;
 import com.gabia.avengers.userservice.dto.request.ModifyRequest;
-import com.gabia.avengers.userservice.dto.request.SignupRequest;
+import com.gabia.avengers.userservice.dto.request.SignUpRequest;
 import com.gabia.avengers.userservice.repository.UserRepository;
 import com.gabia.avengers.userservice.service.CustomUserDetailsService;
 import com.gabia.avengers.userservice.util.JwtUtils;
@@ -74,7 +74,7 @@ class UserControllerTest {
     @Test
     void createUser_성공() throws Exception {
         //given
-        SignupRequest signupRequest = SignupRequest.builder()
+        SignUpRequest signupRequest = SignUpRequest.builder()
                 .username("newUser")
                 .password(password)
                 .build();
@@ -95,7 +95,7 @@ class UserControllerTest {
     @Test
     void createUser_실패_username_없음() throws Exception {
         //given
-        SignupRequest signupRequest = SignupRequest.builder()
+        SignUpRequest signupRequest = SignUpRequest.builder()
 //                .username(username)
                 .password(password)
                 .build();
@@ -117,7 +117,7 @@ class UserControllerTest {
     @Test
     void createUser_실패_password_없음() throws Exception {
         //given
-        SignupRequest signupRequest = SignupRequest.builder()
+        SignUpRequest signupRequest = SignUpRequest.builder()
                 .username(username)
 //                .password(password)
                 .build();
@@ -139,7 +139,7 @@ class UserControllerTest {
     @Test
     void createUser_실패_username_중복() throws Exception {
         //given
-        SignupRequest signupRequest = SignupRequest.builder()
+        SignUpRequest signupRequest = SignUpRequest.builder()
                 .username(username)
                 .password(password)
                 .build();
@@ -161,14 +161,14 @@ class UserControllerTest {
     @Test
     void authenticateUser_성공() throws Exception {
         //given
-        LoginRequest loginRequest = LoginRequest.builder()
+        SignInRequest signInRequest = SignInRequest.builder()
                 .username(username)
                 .password(password)
                 .build();
 
         //when
         ResultActions result = this.mockMvc.perform(post(uri("/signin"))
-                .content(asJsonString(loginRequest))
+                .content(asJsonString(signInRequest))
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON));
 
@@ -183,14 +183,14 @@ class UserControllerTest {
     @Test
     void authenticateUser_실패_존재하지않는_username() throws Exception {
         //given
-        LoginRequest loginRequest = LoginRequest.builder()
+        SignInRequest signInRequest = SignInRequest.builder()
                 .username("123")
                 .password(password)
                 .build();
 
         //when
         ResultActions result = this.mockMvc.perform(post(uri("/signin"))
-                .content(asJsonString(loginRequest))
+                .content(asJsonString(signInRequest))
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON));
 
@@ -204,14 +204,14 @@ class UserControllerTest {
     @Test
     void authenticateUser_실패_password_틀림() throws Exception {
         //given
-        LoginRequest loginRequest = LoginRequest.builder()
+        SignInRequest signInRequest = SignInRequest.builder()
                 .username(username)
                 .password("wrongPassword")
                 .build();
 
         //when
         ResultActions result = this.mockMvc.perform(post(uri("/signin"))
-                .content(asJsonString(loginRequest))
+                .content(asJsonString(signInRequest))
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON));
 

@@ -1,6 +1,6 @@
 package com.gabia.avengers.userservice.service;
 
-import com.gabia.avengers.userservice.dto.request.LoginRequest;
+import com.gabia.avengers.userservice.dto.request.SignInRequest;
 import com.gabia.avengers.userservice.util.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +15,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
 
-    public String authenticate(LoginRequest request) {
+    public String authenticate(SignInRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 

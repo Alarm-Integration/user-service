@@ -2,9 +2,9 @@ package com.gabia.avengers.userservice.controller;
 
 import com.gabia.avengers.userservice.domain.User;
 import com.gabia.avengers.userservice.domain.UserDetailsImpl;
-import com.gabia.avengers.userservice.dto.request.LoginRequest;
+import com.gabia.avengers.userservice.dto.request.SignInRequest;
 import com.gabia.avengers.userservice.dto.request.ModifyRequest;
-import com.gabia.avengers.userservice.dto.request.SignupRequest;
+import com.gabia.avengers.userservice.dto.request.SignUpRequest;
 import com.gabia.avengers.userservice.dto.response.APIResponse;
 import com.gabia.avengers.userservice.dto.response.UserInfoResponse;
 import com.gabia.avengers.userservice.security.CurrentUser;
@@ -36,7 +36,7 @@ public class UserController {
 
     @ApiOperation(value = "회원 가입", notes = "회원 가입")
     @PostMapping("/signup")
-    public ResponseEntity<?> createUser(@Valid @RequestBody SignupRequest signUpRequest,
+    public ResponseEntity<?> createUser(@Valid @RequestBody SignUpRequest signUpRequest,
                                         BindingResult bindingResult) throws Exception {
         validateDuplicateUser(signUpRequest.getUsername(), bindingResult);
 
@@ -58,15 +58,15 @@ public class UserController {
 
     @ApiOperation(value = "로그인", notes = "로그인 성공 시 jwt 토큰을 헤더로 반환합니다")
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest,
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody SignInRequest signInRequest,
                                               BindingResult bindingResult) throws BindException {
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
 
-        String jwt = authService.authenticate(loginRequest);
+        String jwt = authService.authenticate(signInRequest);
 
-        UserInfoResponse userInfoResponse = new UserInfoResponse(jwtUtils.getUserIdFromJwtToken(jwt), loginRequest.getUsername());
+        UserInfoResponse userInfoResponse = new UserInfoResponse(jwtUtils.getUserIdFromJwtToken(jwt), signInRequest.getUsername());
 
         return ResponseEntity
                 .status(HttpStatus.OK)

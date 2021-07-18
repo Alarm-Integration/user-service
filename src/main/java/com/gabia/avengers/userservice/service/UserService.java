@@ -2,7 +2,7 @@ package com.gabia.avengers.userservice.service;
 
 import com.gabia.avengers.userservice.domain.User;
 import com.gabia.avengers.userservice.dto.request.ModifyRequest;
-import com.gabia.avengers.userservice.dto.request.SignupRequest;
+import com.gabia.avengers.userservice.dto.request.SignUpRequest;
 import com.gabia.avengers.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,7 +17,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
 
-    public User createUser(SignupRequest request) throws Exception {
+    public User createUser(SignUpRequest request) throws Exception {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new Exception("이미 존재하는 username입니다");
         }
