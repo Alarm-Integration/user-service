@@ -10,6 +10,7 @@ import com.gabia.avengers.userservice.dto.response.UserInfoResponse;
 import com.gabia.avengers.userservice.security.CurrentUser;
 import com.gabia.avengers.userservice.service.AuthService;
 import com.gabia.avengers.userservice.service.UserService;
+import com.gabia.avengers.userservice.util.JwtUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService userService;
     private final AuthService authService;
+    private final JwtUtils jwtUtils;
 
     @ApiOperation(value = "회원 가입", notes = "회원 가입")
     @PostMapping("/signup")
@@ -64,10 +66,12 @@ public class UserController {
 
         String jwt = authService.authenticate(loginRequest);
 
+        UserInfoResponse userInfoResponse = new UserInfoResponse(jwtUtils.getUserIdFromJwtToken(jwt), loginRequest.getUsername());
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .header("Authorization", jwt)
-                .body(APIResponse.withMessageAndResult("로그인 성공", null));
+                .body(APIResponse.withMessageAndResult("로그인 성공", userInfoResponse));
     }
 
     @ApiOperation(value = "사용자 조회", notes = "사용자를 조회합니다")

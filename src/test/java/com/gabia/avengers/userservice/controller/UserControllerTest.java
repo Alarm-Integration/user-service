@@ -175,7 +175,9 @@ class UserControllerTest {
         //then
         result
                 .andExpect(status().isOk())
-                .andExpect(header().exists("Authorization"));
+                .andExpect(header().exists("Authorization"))
+                .andExpect(jsonPath("$.result.id").value(userId))
+                .andExpect(jsonPath("$.result.username").value(username));
     }
 
     @Test
