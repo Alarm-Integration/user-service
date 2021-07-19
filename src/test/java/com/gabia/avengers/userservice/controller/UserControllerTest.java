@@ -88,8 +88,7 @@ class UserControllerTest {
         //then
         result
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.message").value("회원 가입 성공"))
-                .andExpect(jsonPath("$.result").isEmpty());
+                .andExpect(jsonPath("$.message").value("회원 가입 성공"));
     }
 
     @Test
@@ -197,8 +196,7 @@ class UserControllerTest {
         //then
         result
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value("Bad credentials"))
-                .andExpect(jsonPath("$.result").isEmpty());
+                .andExpect(jsonPath("$.message").value("Bad credentials"));
     }
 
     @Test
@@ -218,8 +216,7 @@ class UserControllerTest {
         //then
         result
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value("Bad credentials"))
-                .andExpect(jsonPath("$.result").isEmpty());
+                .andExpect(jsonPath("$.message").value("Bad credentials"));
     }
 
     @Test
@@ -253,8 +250,7 @@ class UserControllerTest {
         //then
         result
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value("접근 권한이 없습니다"))
-                .andExpect(jsonPath("$.result").isEmpty());
+                .andExpect(jsonPath("$.message").value("접근 권한이 없습니다"));
     }
 
     @Test
@@ -268,8 +264,7 @@ class UserControllerTest {
         //then
         result
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value("인증이 필요합니다"))
-                .andExpect(jsonPath("$.result").isEmpty());
+                .andExpect(jsonPath("$.message").value("인증이 필요합니다"));
     }
 
     @Test
@@ -315,8 +310,7 @@ class UserControllerTest {
         //then
         result
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value("접근 권한이 없습니다"))
-                .andExpect(jsonPath("$.result").isEmpty());
+                .andExpect(jsonPath("$.message").value("접근 권한이 없습니다"));
     }
 
     @Test
@@ -335,8 +329,7 @@ class UserControllerTest {
         //then
         result
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value("인증이 필요합니다"))
-                .andExpect(jsonPath("$.result").isEmpty());
+                .andExpect(jsonPath("$.message").value("인증이 필요합니다"));
     }
 
     @Test
@@ -352,8 +345,7 @@ class UserControllerTest {
         //then
         result
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("회원 삭제 성공"))
-                .andExpect(jsonPath("$.result").isEmpty());
+                .andExpect(jsonPath("$.message").value("회원 삭제 성공"));
     }
 
     @Test
@@ -369,8 +361,7 @@ class UserControllerTest {
         //then
         result
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value("접근 권한이 없습니다"))
-                .andExpect(jsonPath("$.result").isEmpty());
+                .andExpect(jsonPath("$.message").value("접근 권한이 없습니다"));
     }
 
     @Test
@@ -384,8 +375,7 @@ class UserControllerTest {
         //then
         result
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value("인증이 필요합니다"))
-                .andExpect(jsonPath("$.result").isEmpty());
+                .andExpect(jsonPath("$.message").value("인증이 필요합니다"));
     }
 
     private static String asJsonString(final Object obj) {
