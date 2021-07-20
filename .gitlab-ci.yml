@@ -17,10 +17,10 @@ test:
   stage: test
   script:
     - gradle test
+    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, " instructions covered"; print 100*covered/instructions, "% covered" }' $JACOCO_CSV_LOCATION
   artifacts:
     paths:
       - build/jacoco/jacoco.xml
-      - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, " instructions covered"; print 100*covered/instructions, "% covered" }' $JACOCO_CSV_LOCATION
 
 coverage:
   stage: visualize
